@@ -1,0 +1,23 @@
+.vraper{
+    display: block;
+    width: 700px;
+    height: 400px;
+    border: 1px solid #000;
+    padding: 20px;
+}
+
+.paint{
+    width:inherit;
+    height:inherit;
+    border: 1px solid #000;
+}
+
+.buttom-box{
+    padding: 10px;
+}
+
+.canvas{
+    /* width: 500px; */
+    /* height: 500px; */
+     border: 1px solid #000;
+}

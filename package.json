@@ -1,0 +1,21 @@
+{
+  "name": "testcanvas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "parcel ./index.html -p 5500",
+    "build": "parcel build ./index.html"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evgenii-ivanov87/testCanvas.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evgenii-ivanov87/testCanvas/issues"
+  },
+  "homepage": "https://github.com/evgenii-ivanov87/testCanvas#readme"
+}
