@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "parcel ./index.html -p 5500",
+    "start": "parcel ./index.html -p 5500",
     "build": "parcel build ./index.html"
-
   },
   "repository": {
     "type": "git",
@@ -17,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/evgenii-ivanov87/testCanvas/issues"
   },
-  "homepage": "https://github.com/evgenii-ivanov87/testCanvas#readme"
+  "homepage": "https://github.com/evgenii-ivanov87/testCanvas#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
 }

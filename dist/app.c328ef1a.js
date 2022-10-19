@@ -176,47 +176,55 @@ module.hot.accept(reloadCSS);
 "use strict";
 
 require("./index.css");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var isClick = false;
 var coords = [];
 var x = '';
 var y = '';
+function setCoors(e) {
+  x = e.clientX;
+  y = e.clientY;
+  coords.push([e.clientX, e.clientY]);
+}
 ctx.lineWidth = 1 * 2;
 canvas.addEventListener('click', function (e) {
   isClick = !isClick;
-  ctx.beginPath();
-  // save(coords)
-  // coords.push([e.clientX,e.clientY])
-  // console.log(coords)
-
-  x = e.clientX;
-  y = e.clientY;
-  console.log(x);
-  console.log(y);
+  setCoors(e);
+});
+canvas.addEventListener('mousedown', function (e) {
+  if (e.button === 2) {}
 });
 canvas.onmousemove = function (e) {
   if (isClick) {
-    // coords.push([e.clientX,e.clientY])
-    // ctx.lineTo(e.clientX,e.clientY)
-    // ctx.stroke()
-
-    // ctx.beginPath();
-    // ctx.arc(e.clientX,e.clientY,1,0,Math.PI*2);
-    // ctx.fill();
-
-    // ctx.beginPath();
-    // ctx.moveTo(e.clientX,e.clientY); 
-    // ctx.closePath()
-
     ctx.beginPath();
+    ctx.lineCap = 'square';
     ctx.moveTo(x, y);
     ctx.lineTo(e.clientX, e.clientY);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.stroke();
   }
 };
-function save(items) {
-  localStorage.setItem('coords', JSON.stringify(items));
+function paint(item) {
+  var c = item.length;
+  var _item$ = _slicedToArray(item[0], 2),
+    x1 = _item$[0],
+    y1 = _item$[1];
+  var _item$2 = _slicedToArray(item[1], 2),
+    x2 = _item$2[0],
+    y2 = _item$2[1];
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  console.log(c);
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
 }
 },{"./index.css":"index.css"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -243,7 +251,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60789" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "10362" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
