@@ -3,61 +3,51 @@ import "./index.css"
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let isClick = false;
-const coords = [];
-let x='';
-let y='';
+let coords = {
+    pX:0,
+    pY:0,
+    x:0,
+    y:0
+};
 
-function setCoors(e) {
-    x = e.clientX;
-    y = e.clientY
-  
-    coords.push([e.clientX,e.clientY])
+
+
+
+
+function prevCoors(e) {
+    coords.pX = e.clientX,
+    coords.pY = e.clientY
+      
 }
 
+function nextCoors(e) {
+    coords.x = e.clientX
+    coords.y = e.clientY     
+}
 
 ctx.lineWidth = 1*2
 
 canvas.addEventListener('click', function(e){
     isClick = !isClick
-    setCoors(e)   
-    
-})
-
-canvas.addEventListener('mousedown', function(e){
-    if (e.button === 2) {
-        
-    }  
-    
+    prevCoors(e)
+    ctx.save()  
+       
 })
 
 canvas.onmousemove= function(e){
-    
-    if (isClick) {    
-       
-        ctx.beginPath();
-        ctx.lineCap = 'square';
-        ctx.moveTo(x,y);
-        ctx.lineTo(e.clientX, e.clientY);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.stroke()
-      
-       
-    }
-    
-    
+        if (isClick) {          
+        nextCoors(e)
+        paint(coords.pX,coords.pY,coords.x,coords.y)
+   }
 }
 
+function paint(x1,y1,x2,y2){
 
-
-function paint(item) {
-    let c =item.length
-    let [x1, y1] = item[0]
-    let [x2, y2] = item[1]
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    console.log(c)
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2,y2);
+     ctx.beginPath();
+     ctx.restore()       
+     ctx.moveTo(x1,y1);
+     ctx.lineTo(x2, y2);  
+    //  ctx.clearRect(0, 0, canvas.width, canvas.height);
+     ctx.stroke()  
     
-    ctx.stroke()
-}
+} 

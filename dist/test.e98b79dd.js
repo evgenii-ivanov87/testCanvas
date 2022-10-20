@@ -172,45 +172,82 @@ module.exports = reloadCSS;
 var reloadCSS = require('_css_loader');
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"app.js":[function(require,module,exports) {
+},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"test.js":[function(require,module,exports) {
 "use strict";
 
 require("./index.css");
 var canvas = document.getElementById('canvas');
+// const clear = document.getElementById('clear');
 var ctx = canvas.getContext('2d');
-var isClick = false;
-var coords = {
-  pX: 0,
-  pY: 0,
-  x: 0,
-  y: 0
-};
-function prevCoors(e) {
-  coords.pX = e.clientX, coords.pY = e.clientY;
-}
-function nextCoors(e) {
-  coords.x = e.clientX;
-  coords.y = e.clientY;
-}
-ctx.lineWidth = 1 * 2;
-canvas.addEventListener('click', function (e) {
-  isClick = !isClick;
-  prevCoors(e);
-  ctx.save();
-});
-canvas.onmousemove = function (e) {
-  if (isClick) {
-    nextCoors(e);
-    paint(coords.pX, coords.pY, coords.x, coords.y);
+var lastCanvas;
+
+// clear.addEventListener('click', () => {
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+// });
+
+var down = false;
+var lastPoints = [];
+// ctx.lineCap = 'round';
+
+canvas.addEventListener('click', function (_ref, event) {
+  var x = _ref.offsetX,
+    y = _ref.offsetY;
+  if (down === false) {
+    lastPoints.push({
+      x: x,
+      y: y
+    });
+    // ctx.lineWidth = 5;
+    // lastCanvas = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    down = true;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+  } else {
+    //  ctx.putImageData(lastCanvas, 0, 0);
+    redraw();
+    lastPoints = [];
+    down = false;
   }
-};
-function paint(x1, y1, x2, y2) {
-  ctx.beginPath();
-  ctx.restore();
-  ctx.moveTo(x1, y1);
-  ctx.lineTo(x2, y2);
-  //  ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+// canvas.addEventListener('mouseup', (event) => {
+//     ctx.putImageData(lastCanvas, 0, 0);
+//   redraw();
+//   lastPoints = [];
+//   down = false;
+// });
+
+canvas.addEventListener('mousemove', function (_ref2) {
+  var x = _ref2.offsetX,
+    y = _ref2.offsetY;
+  if (!down) return;
+  lastPoints.push({
+    x: x,
+    y: y
+  });
+  ctx.lineTo(x, y);
   ctx.stroke();
+});
+function redraw() {
+  if (lastPoints.length === 0) return;
+  var length = lastPoints.length;
+  var _lastPoints$ = lastPoints[0],
+    x = _lastPoints$.x,
+    y = _lastPoints$.y;
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  for (var i = 0; i < length; i++) {
+    var _lastPoints$i = lastPoints[i],
+      _x = _lastPoints$i.x,
+      _y = _lastPoints$i.y;
+    ctx.lineWidth = easyOut(1 - i / length) * 5;
+    console.log("x", i / length, "easyOut", easyOut(i / length));
+    ctx.lineTo(_x, _y);
+    ctx.stroke();
+  }
+}
+function easyOut(x) {
+  return -Math.cos(x * Math.PI * 0.1 + Math.PI * 0.1);
 }
 },{"./index.css":"index.css"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -381,5 +418,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","app.js"], null)
-//# sourceMappingURL=/app.c328ef1a.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","test.js"], null)
+//# sourceMappingURL=/test.e98b79dd.js.map
